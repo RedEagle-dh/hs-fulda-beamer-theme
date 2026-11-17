@@ -1,0 +1,100 @@
+% !TeX program = lualatex
+% Example deck for beamerthemefulda.sty. All content is placeholder text.
+\documentclass[aspectratio=169, 11pt, english]{beamer}
+
+\usepackage[english]{babel}
+\usepackage{booktabs}
+
+% Shows hs-fulda-logo.png from this folder. Other file: logo=<file>. No logo: nologo.
+\usetheme{fulda}
+
+\title{Presentation title}
+\subtitle{A subtitle or guiding question}
+\author{First Author \and Second Author}
+\institute{Department or module, lecturer}
+\date{Date of the presentation}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Lists and emphasis}
+
+\begin{frame}{Lists and emphasis}
+  \framesubtitle{A frame subtitle is optional}
+
+  \begin{itemize}
+    \item One statement per bullet
+    \item \alert{Emphasis} with \texttt{\textbackslash alert}
+    \begin{itemize}
+      \item Second level
+    \end{itemize}
+  \end{itemize}
+
+  \begin{enumerate}
+    \item First step
+    \item Second step
+  \end{enumerate}
+\end{frame}
+
+\section{Columns and blocks}
+
+\begin{frame}{Columns and blocks}
+  \begin{columns}[T, onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      Text and blocks can sit side by side.
+
+      The content starts at the same height on every slide.
+
+      \begin{alertblock}{Alert block}
+        For warnings and limits.
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Block}
+        A block highlights a key statement.
+      \end{block}
+      \begin{exampleblock}{Example block}
+        For cases and exercises.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Quotes, tables and sources}
+
+\begin{frame}{Quotes, tables and sources}
+  \pullquote[Author (Year), p.~34]{“A verbatim quote that should stand out on the slide.”}
+
+  \begin{center}
+    \begin{tabular}{lrr}
+      \toprule
+      Condition & Before & After \\
+      \midrule
+      Group A & 0.0 & 0.0 \\
+      Group B & 0.0 & 0.0 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \sourceline{placeholder values, own illustration}
+\end{frame}
+
+\section*{References}
+
+\begin{frame}{References}
+  \begin{thebibliography}{9}
+    \bibitem{author-a}
+      Author, A. (Year). \emph{Title of the book}. Publisher.
+    \bibitem{author-b}
+      Author, B., \& Author, C. (Year). Title of the article. \emph{Journal Name}, 1(2), 34--56.
+  \end{thebibliography}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Nix / direnv
+.direnv/
+result
+result-*
+
+# LaTeX output (latexmk writes to build/)
+build/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc

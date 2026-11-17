@@ -1,0 +1,324 @@
+% beamerthemefulda.sty
+% Unofficial beamer theme in the colours of Hochschule Fulda.
+% Not affiliated with or endorsed by Hochschule Fulda.
+%
+% SPDX-License-Identifier: MIT
+% Copyright (c) 2026 David Hermann
+% Full licence text: see LICENSE or https://opensource.org/licenses/MIT
+%
+% The theme code is MIT licensed. The logo file hs-fulda-logo.png is not:
+% it belongs to Hochschule Fulda and is excluded from the licence.
+%
+% Usage (compile with LuaLaTeX):
+%   \usetheme{fulda}
+%
+% Options
+%   logo=<file>   image for the title slide and the top right corner of
+%                 content slides, with file extension
+%                 (default: hs-fulda-logo.png, looked up next to the slides)
+%   nologo        no logo
+%
+% Commands
+%   \sourceline{<source>}          small grey source line at the bottom of a slide
+%   \pullquote[<source>]{<text>}   highlighted quote with a green bar
+%   \quelle, \zitat                German aliases for the two commands above
+%   \AtBeginSection{}              turns the green section slides off
+%
+% Colours
+%   fuldagreen       accent for areas and marks (too light for text on white)
+%   fuldadarkgreen   green for text on white
+%   fuldablack, fuldagray, fuldarule
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemefulda}[2026/11/17 v1.0 Unofficial Hochschule Fulda beamer theme]
+
+\RequirePackage{iftex}
+\ifpdftex
+  \PackageError{beamerthemefulda}{This theme needs LuaLaTeX}%
+    {Compile with lualatex, for example `latexmk -lualatex'.}
+\fi
+
+\mode<presentation>
+
+\def\fulda@logo{hs-fulda-logo.png}
+\DeclareOptionBeamer{logo}{\def\fulda@logo{#1}}
+\DeclareOptionBeamer{nologo}[]{\def\fulda@logo{}}
+\ProcessOptionsBeamer
+
+\RequirePackage{tikz}
+\RequirePackage{array}
+\RequirePackage{fontspec}
+\usefonttheme{professionalfonts}
+\RequirePackage{unicode-math}
+
+% ---------------------------------------------------------------- Colours
+\definecolor{fuldagreen}{HTML}{71BF44}
+\colorlet{fuldadarkgreen}{fuldagreen!60!black}  % contrast on white 5.6:1
+\definecolor{fuldablack}{HTML}{1A1A1A}
+\definecolor{fuldagray}{HTML}{5C6166}
+\definecolor{fuldarule}{HTML}{E1E5DE}
+
+\setbeamercolor{normal text}{fg=fuldablack, bg=white}
+\setbeamercolor{structure}{fg=fuldagreen}
+\setbeamercolor{alerted text}{fg=fuldadarkgreen}
+\setbeamercolor{title}{fg=fuldablack}
+\setbeamercolor{subtitle}{fg=fuldagray}
+\setbeamercolor{author}{fg=fuldablack}
+\setbeamercolor{institute}{fg=fuldagray}
+\setbeamercolor{date}{fg=fuldagray}
+\setbeamercolor{frametitle}{fg=fuldablack}
+\setbeamercolor{framesubtitle}{fg=fuldagray}
+\setbeamercolor{footline}{fg=fuldagray}
+\setbeamercolor{section title}{fg=fuldablack}
+\setbeamercolor{section in toc}{fg=fuldablack}
+\setbeamercolor{subsection in toc}{fg=fuldagray}
+\setbeamercolor{itemize item}{fg=fuldagreen}
+\setbeamercolor{itemize subitem}{fg=fuldagreen}
+\setbeamercolor{itemize subsubitem}{fg=fuldagreen}
+\setbeamercolor{enumerate item}{fg=fuldadarkgreen}
+\setbeamercolor{enumerate subitem}{fg=fuldadarkgreen}
+\setbeamercolor{description item}{fg=fuldadarkgreen}
+\setbeamercolor{caption name}{fg=fuldadarkgreen}
+\setbeamercolor{bibliography entry author}{fg=fuldablack}
+\setbeamercolor{bibliography entry title}{fg=fuldablack}
+\setbeamercolor{bibliography entry location}{fg=fuldablack}
+\setbeamercolor{bibliography entry note}{fg=fuldablack}
+\setbeamercolor{block title}{fg=fuldablack, bg=fuldagreen!32}
+\setbeamercolor{block body}{fg=fuldablack, bg=fuldagreen!10}
+\setbeamercolor{block title alerted}{fg=white, bg=fuldablack}
+\setbeamercolor{block body alerted}{fg=fuldablack, bg=black!7}
+\setbeamercolor{block title example}{fg=fuldablack, bg=black!14}
+\setbeamercolor{block body example}{fg=fuldablack, bg=black!5}
+
+% ------------------------------------------------------------------ Fonts
+\setsansfont{FiraSans}[
+  Extension      = .otf,
+  UprightFont    = *-Regular,
+  ItalicFont     = *-Italic,
+  BoldFont       = *-SemiBold,
+  BoldItalicFont = *-SemiBoldItalic,
+]
+\newfontfamily\fuldalight{FiraSans}[
+  Extension   = .otf,
+  UprightFont = *-Light,
+  ItalicFont  = *-LightItalic,
+]
+\setmonofont{FiraMono}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+  Scale       = MatchLowercase,
+]
+\setmathfont{FiraMath-Regular.otf}
+\urlstyle{same}
+
+\setbeamerfont{title}{size=\fontsize{30}{34}\selectfont, series=\bfseries}
+\setbeamerfont{subtitle}{size=\fontsize{13}{17}\selectfont, series=\mdseries}
+\setbeamerfont{author}{size=\normalsize, series=\bfseries}
+\setbeamerfont{institute}{size=\fontsize{8.5}{11.5}\selectfont}
+\setbeamerfont{date}{size=\fontsize{8.5}{11.5}\selectfont}
+\setbeamerfont{frametitle}{size=\fontsize{16}{19}\selectfont, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\mdseries}
+\setbeamerfont{section title}{size=\fontsize{22}{27}\selectfont, series=\bfseries}
+\setbeamerfont{footline}{size=\fontsize{7}{9}\selectfont}
+\setbeamerfont{block title}{size=\normalsize, series=\bfseries}
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{enumerate item}{series=\bfseries}
+\setbeamerfont{description item}{series=\bfseries}
+\setbeamerfont{caption}{size=\footnotesize}
+\setbeamerfont{caption name}{series=\bfseries}
+
+% ----------------------------------------------------------------- Layout
+\newlength{\fulda@margin}
+\setlength{\fulda@margin}{10mm}
+\setbeamersize{text margin left=\fulda@margin, text margin right=\fulda@margin}
+
+% Content starts at the same height on every slide
+\beamer@centeredfalse
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+% Paragraph spacing inside frames and inside columns
+\newcommand{\fulda@parskip}{\setlength{\parskip}{0.45\baselineskip}}
+\AtBeginEnvironment{beamer@frameslide}{\fulda@parskip}
+\ifx\@minipagerestore\relax
+  \def\@minipagerestore{\fulda@parskip}
+\else
+  \g@addto@macro\@minipagerestore{\fulda@parskip}
+\fi
+
+% Logo: used only if the file exists
+\newif\iffulda@haslogo
+\newlength{\fulda@logoreserve}
+\ifx\fulda@logo\@empty\else
+  \IfFileExists{\fulda@logo}%
+    {\fulda@haslogotrue\setlength{\fulda@logoreserve}{36mm}}%
+    {\PackageWarningNoLine{beamerthemefulda}%
+      {Logo file `\fulda@logo' not found, continuing without a logo}}%
+\fi
+
+% Logo in the top right corner of content slides
+\setbeamertemplate{background}{%
+  \ifbeamer@plainframe\else\iffulda@haslogo
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle (\paperwidth,-\paperheight);
+      \node[anchor=north east, inner sep=0pt] at ({\paperwidth-\fulda@margin},-5.8mm)
+        {\includegraphics[width=30mm]{\fulda@logo}};
+    \end{tikzpicture}%
+  \fi\fi
+}
+
+% Frame title with a green accent bar
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vskip 5.5mm
+  \parbox[t]{\dimexpr\textwidth-\fulda@logoreserve\relax}{\raggedright
+    {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\hyphenpenalty\@M\strut\insertframetitle\strut\par}%
+    \ifx\insertframesubtitle\@empty\else
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+    \fi
+    \vskip 1.4mm
+    {\color{fuldagreen}\rule{12mm}{1mm}}\par}%
+  \par
+  \vskip 2.5mm
+}
+\setbeamertemplate{frametitle continuation}[from second]
+
+% Footline: short title, section, frame number and a progress bar
+\newlength{\fulda@progress}
+\setbeamertemplate{footline}{%
+  \vskip 1.5mm
+  \leavevmode
+  \hbox to \paperwidth{%
+    \hskip\fulda@margin
+    \usebeamerfont{footline}\usebeamercolor[fg]{footline}%
+    \insertshorttitle
+    \ifx\secname\@empty\else\enspace\textbar\enspace\secname\fi
+    \hfill
+    \insertframenumber\,/\,\inserttotalframenumber
+    \hskip\fulda@margin}%
+  \par\nointerlineskip
+  \vskip 2.4mm
+  \setlength{\fulda@progress}{\dimexpr\paperwidth*\insertframenumber/\inserttotalframenumber\relax}%
+  \ifdim\fulda@progress>\paperwidth \setlength{\fulda@progress}{\paperwidth}\fi
+  \hbox to \paperwidth{%
+    {\color{fuldagreen}\rule{\fulda@progress}{1.2mm}}%
+    {\color{fuldarule}\rule{\dimexpr\paperwidth-\fulda@progress\relax}{1.2mm}}}%
+}
+
+% ------------------------------------------------------------ Title slide
+% Use as: \begin{frame}[plain]\titlepage\end{frame}
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[fuldagreen] ([xshift=-44mm]current page.north east) rectangle (current page.south east);
+    \iffulda@haslogo
+      \node[anchor=north west, inner sep=0pt]
+        at ([xshift=\fulda@margin, yshift=-10mm]current page.north west)
+        {\includegraphics[width=56mm]{\fulda@logo}};
+    \fi
+    \node[anchor=west, inner sep=0pt, text width=98mm, align=flush left]
+      at ([xshift=\fulda@margin, yshift=-2mm]current page.west) {%
+        \parskip\z@
+        {\usebeamerfont{title}\usebeamercolor[fg]{title}\hyphenpenalty\@M\inserttitle\par}%
+        \vskip 2.5mm
+        {\color{fuldagreen}\rule{14mm}{1.2mm}\par}%
+        \ifx\insertsubtitle\@empty\else
+          \vskip 3mm
+          {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+        \fi};
+    \node[anchor=south west, inner sep=0pt, text width=98mm, align=flush left]
+      at ([xshift=\fulda@margin, yshift=9mm]current page.south west) {%
+        \parskip\z@
+        \def\beamer@andtitle{\enspace{\color{fuldagreen}\textbullet}\enspace}%
+        {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+        \vskip 1.2mm
+        {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
+        {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}};
+  \end{tikzpicture}%
+}
+
+% ---------------------------------------------------------- Section slide
+% Shown automatically before every \section{...}; \AtBeginSection{} turns it off
+\setbeamertemplate{section page}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=west, inner sep=0pt, text width=140mm, align=flush left]
+      at ([xshift=\fulda@margin]current page.west) {%
+        \parskip\z@
+        {\fuldalight\fontsize{44}{44}\selectfont\color{white}%
+          \ifnum\value{section}<10 0\fi\insertsectionnumber\par}%
+        \vskip 3mm
+        {\usebeamerfont{section title}\usebeamercolor[fg]{section title}\hyphenpenalty\@M\secname\par}};
+  \end{tikzpicture}%
+}
+\AtBeginSection[]{%
+  \begingroup
+    \setbeamercolor{background canvas}{bg=fuldagreen}%
+    \begin{frame}[plain, noframenumbering]
+      \sectionpage
+    \end{frame}
+  \endgroup
+}
+
+% ------------------------------------------- Lists and table of contents
+\setlength{\leftmargini}{1.3em}
+\setlength{\leftmarginii}{1.3em}
+\setbeamertemplate{itemize item}{\raisebox{0.3ex}{\rule{0.72ex}{0.72ex}}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.55ex}{\rule{0.9ex}{0.14ex}}}
+\setbeamertemplate{itemize subsubitem}{\raisebox{0.55ex}{\rule{0.6ex}{0.14ex}}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+
+% Fixed spacing between entries instead of stretching over the slide
+\patchcmd{\beamer@sectionintoc}{\vfill}{\parskip\z@\vskip 1.8mm}{}{}
+\setbeamertemplate{section in toc}{%
+  \leavevmode\strut
+  \smash{\makebox[2.3em][l]{\color{fuldadarkgreen}\bfseries
+    \ifnum\inserttocsectionnumber<10 0\fi\inserttocsectionnumber}%
+  \inserttocsection}\par}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\hspace{2.3em}{\small\inserttocsubsection}\par}
+
+\setbeamertemplate{bibliography item}{}
+
+% ----------------------------------------------------------------- Blocks
+\newcommand{\fulda@blockbegin}[1]{%
+  \par
+  \if@minipage\else\vskip\dimexpr 3.8mm-\parskip\relax\fi
+  \ifx\insertblocktitle\@empty\else
+    \begin{beamercolorbox}[wd=\dimexpr\linewidth-4mm\relax, sep=2mm]{block title#1}%
+      \usebeamerfont*{block title#1}\insertblocktitle
+    \end{beamercolorbox}%
+    \nointerlineskip
+  \fi
+  \usebeamerfont{block body#1}%
+  \begin{beamercolorbox}[wd=\dimexpr\linewidth-4mm\relax, sep=2mm, vmode]{block body#1}%
+    \setlength{\parskip}{0pt}\vbox{}}
+\newcommand{\fulda@blockend}{\end{beamercolorbox}\par\vskip\dimexpr 3mm-\parskip\relax}
+\setbeamertemplate{block begin}{\fulda@blockbegin{}}
+\setbeamertemplate{block end}{\fulda@blockend}
+\setbeamertemplate{block alerted begin}{\fulda@blockbegin{ alerted}}
+\setbeamertemplate{block alerted end}{\fulda@blockend}
+\setbeamertemplate{block example begin}{\fulda@blockbegin{ example}}
+\setbeamertemplate{block example end}{\fulda@blockend}
+
+% ------------------------------------------------- Source line and quote
+% The label follows the document language: "Quelle" in German, "Source" otherwise
+\providetranslation[to=German]{Source}{Quelle}
+
+\newcommand{\sourceline}[1]{%
+  \par\vfill
+  {\fontsize{7.5}{9.5}\selectfont\color{fuldagray}\translate{Source}: #1\par}}
+
+\newcommand{\pullquote}[2][]{%
+  \par\medskip\noindent
+  \begin{tabular}{@{}!{\color{fuldagreen}\vrule width 1.2mm}@{\hspace{4mm}}p{\dimexpr\linewidth-5.2mm\relax}@{}}
+    {\large #2}%
+    \if\relax\detokenize{#1}\relax\else
+      \par\vspace{1.5mm}{\footnotesize\color{fuldagray}#1}%
+    \fi
+  \end{tabular}\par\medskip}
+
+\newcommand{\quelle}{\sourceline}
+\newcommand{\zitat}{\pullquote}
+
+\mode<all>
